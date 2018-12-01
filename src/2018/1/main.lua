@@ -4,7 +4,7 @@
 --- DateTime: 01.12.18 14:51
 ---
 
-
+-- Aufgabe 1
 function main(fileName)
     local file = io.open(fileName, "r");
     local number = 0;
@@ -17,7 +17,32 @@ function main(fileName)
     return number;
 end
 
+-- Aufgabe 2
+function main_2(fileName)
+    local file = io.open(fileName, "r");
+    local number = 0;
+
+    local twice = {};
+
+    while(true) do
+        for i in (file:read("*all")):gmatch("%S+") do
+            number = number + tonumber(i);
+            twiceNumber = twice[number] ~= nil and twice[number] or 0;
+
+            if(twiceNumber == 1) then
+                file:close();
+                return number;
+            end
+
+            twice[number] = twiceNumber + 1;
+        end
+
+        file:seek("set", 0)
+    end
+end
+
 print(main("2018/1/input.txt"));
+print(main_2("2018/1/input.txt"));
 
 --[[
     in Lua 5.1 würde auch folgender Einzeiler gehen:
